@@ -14,7 +14,7 @@ app.use("/customer/auth/*", function auth(req,res,next){
     
 //Write the authenication mechanism here
 if(req.session.authorization){
-    let token = req.session.authorization['accessToke'];
+    let token = req.session.authorization['accessToken'];
 
     //Verify JWT Toke
     jwt.verify(token, "access", (err, user) => {
