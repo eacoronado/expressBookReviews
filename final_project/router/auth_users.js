@@ -71,10 +71,31 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   reviews[username] = review;
   if(reviews[username]){
       reviews[username] = review;
-      console.log(book);
+      
       return res.status(200).json({message: "Your review has been added"});
     }
 });
+
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    const isbn = req.params.isbn;
+
+    if(!req.session.authorization){
+        return res.status(403).json({message: "User not authenticated"});
+    }
+
+    const username = req.session.authorization.username;
+    const book = books[isbn];
+    if(!book){
+        return res.status(404).json({message: "Book not found"});
+    }
+    let reviews = book["reviews"];
+
+    if(reviews[username]){
+        delete reviews[username]
+        return res.status(200).json({message: "Review deleted"})
+    }
+    return res.status(404).json({message: "You dont have a review for this book"});
+})
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
