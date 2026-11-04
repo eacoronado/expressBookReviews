@@ -39,7 +39,7 @@ async function getAllBooks(){
         console.log(error.message);
     }
 }
-getAllBooks().then(bookk => {console.log(books)});
+//getAllBooks().then(bookk => {console.log(books)});
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
@@ -61,9 +61,9 @@ public_users.get('/isbn/:isbn',function (req, res) {
         console.log(error.message)
     }
  }
- getBookByIsbn(2).then(book => {
-    console.log(book)
- })
+//  getBookByIsbn(2).then(book => {
+//     console.log(book)
+//  })
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
@@ -77,6 +77,18 @@ public_users.get('/author/:author',function (req, res) {
   return res.status(404).json({message: "Book not found"});
 });
 
+async function getBookByAuthor(author){
+    try{
+    const response = await axios(`https://eacoronado79-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/author/${author}`);
+    return response.data;
+    }catch(error){
+        console.log(error.message)
+    }
+}
+getBookByAuthor("Dante Alighieri").then(book => {
+    console.log(book)
+})
+
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
@@ -87,6 +99,8 @@ public_users.get('/title/:title',function (req, res) {
   }
   return res.status(404).json({message: "Book not found"});
 });
+
+
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
