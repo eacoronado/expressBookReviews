@@ -85,9 +85,9 @@ async function getBookByAuthor(author){
         console.log(error.message)
     }
 }
-getBookByAuthor("Dante Alighieri").then(book => {
-    console.log(book)
-})
+// getBookByAuthor("Dante Alighieri").then(book => {
+//     console.log(book)
+// })
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
@@ -99,6 +99,18 @@ public_users.get('/title/:title',function (req, res) {
   }
   return res.status(404).json({message: "Book not found"});
 });
+
+async function getBookByTitle(title){
+    try{
+        const response = await axios(`https://eacoronado79-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/title/${title}`)
+        return response.data;
+    }catch(error){
+        console.log(error.message)
+    }
+    }
+getBookByTitle("The Book Of Job").then(book => {
+    console.log(book)
+})
 
 
 
