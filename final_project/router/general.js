@@ -3,6 +3,7 @@ let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
+const axios = require('axios');
 
 
 public_users.post("/register", (req,res) => {
@@ -28,8 +29,17 @@ public_users.post("/register", (req,res) => {
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
   //Write your code here
-  return res.status(200).json(JSON.stringify(books, null, 4));
+  return res.status(200).json(books);
 });
+
+async function getAllBooks(){
+    try{
+        const response = await axios.get("https://eacoronado79-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/");
+    }catch(error){
+        console.log(error.message);
+    }
+}
+getAllBooks().then(bookk => {console.log(books)});
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
