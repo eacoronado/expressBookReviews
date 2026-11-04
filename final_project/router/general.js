@@ -51,6 +51,19 @@ public_users.get('/isbn/:isbn',function (req, res) {
   }
   return res.status(404).json({message: "Book not founded"});
  });
+
+ async function getBookByIsbn(isbn){
+
+    try{
+        const response = await axios.get(`https://eacoronado79-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/isbn/${isbn}`)
+        return response.data;
+    }catch(error){
+        console.log(error.message)
+    }
+ }
+ getBookByIsbn(2).then(book => {
+    console.log(book)
+ })
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
